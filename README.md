@@ -2,6 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Issues/Technical Debt 
 
+- Rotate Resend API key for sending emails for password recovery and email verification
 - Need to refactor prisma schema and all the forms to allow the mtl file to be optional or remove it entirely as the current model rendering logic doesnt use it 
   
 

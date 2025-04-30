@@ -96,7 +96,7 @@ export default function Page() {
 			setObjFile(res.data.objFile);
 			setTxtFile(res.data.txtFile);
 		});
-	});
+	}, []);
 
 	useEffect(() => {
 		axios.get(`/api/models/${id}/annotations`).then((res) => {
@@ -105,7 +105,7 @@ export default function Page() {
 			setAnnotations(res.data.annotations);
 			setAnnotationLength(res.data.annotations.length);
 		});
-	});
+	}, []);
 
 
 	const handleClick = (event) => {
@@ -208,6 +208,29 @@ export default function Page() {
 							Next
 						</Button>
 						<Button onClick={saveAnnotations}> Save Position </Button>
+
+						<Button onClick={() => {
+							try {
+								const deletingAnnotation = annotations[editingAnnotation] 
+								axios.delete(`/api/models/${id}/annotations/${deletingAnnotation.id}`)
+									.then((res) => {
+										
+
+										setAnnotations(annotations.filter(a => a.id !== deletingAnnotation.id))
+
+										setEditedAnnotations(editedAnnotations => {
+											const updatedSet = new Set(editedAnnotations);
+											updatedSet.delete(deletingAnnotation.id);
+											return updatedSet;
+										});
+									})
+							} catch {
+								setFail(true);
+							}
+
+						}}> Deleting {annotations[editingAnnotation]?.annotationName} </Button>
+				
+						
 					</div>
 				) : (
 					<></>

@@ -13,6 +13,24 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
+export const DELETE = async (request:NextRequest, response:NextResponse) => {
+    const url = new URL(request.url);
+    const id = url.pathname.split('/').pop(); // Extract the ID from the URL
+
+    try {
+        await db.annotation.delete({
+            where: {
+                id: id as string
+            }
+        })
+    } catch(e) {
+        console.error(e);
+        return NextResponse.json({ message: 'Error deleting annotation' }, { status: 500 });
+    }
+
+    return NextResponse.json({ message: 'Annotation deleted' }, { status: 200 });
+}
+
 export const PUT = async ( request:NextRequest, response:NextResponse) => {
     const url = new URL(request.url);
     const id = url.pathname.split('/').pop(); // Extract the ID from the URL
@@ -35,5 +53,5 @@ export const PUT = async ( request:NextRequest, response:NextResponse) => {
         return NextResponse.json({ message: 'Error updating annotation' }, { status: 500 });
     }
 
-    return NextResponse.json({ message: 'Annotation updated' }, { status: 200 });
+    return NextResponse.json({ message: 'Annotation updated' }, { status: 201 });
 }

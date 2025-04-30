@@ -81,7 +81,7 @@ const AnnotationForm = ({ onSubmit }) => {
 								<FormControl>
 									<Input
 										{...field}
-										placeholder="Enter your name"
+										placeholder="Enter annotation name"
 										disabled={isPending}
 									/>
 								</FormControl>
